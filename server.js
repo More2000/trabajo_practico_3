@@ -52,11 +52,14 @@ catch(er) {
 
 // CREAR TAREA
 app.post('/tarea', async (req, res) => {
-  const {title, description} = req.body;
+  const { title, description, creationPerson, assignedPerson } = req.body;
   try {
    const response = await axios.post(`http://localhost:${PORT_GESTION}/tarea`, {   
     title: title,
-    description: description     
+    description: description,
+    creationDate: new Date(),
+    creationPerson: creationPerson,
+    assignedPerson: assignedPerson
    });
     const resp = response.data;
     res.json(resp);
@@ -78,6 +81,21 @@ app.get('/tareas', async (req, res) => {
 }
 })
 
+/////////////////////////////////////////////////////////////////////////
+
+// OBTENER ESTADÍSTICAS DE TAREAS
+app.get('/tareas/estadisticas', async (req, res) => {
+  try {
+    const response = await axios.get(`http://localhost:${PORT_GESTION}/tareas/estadisticas`);
+    const resp = response.data;
+    res.json(resp);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error interno del servidor al obtener estadísticas");
+  }
+});
+
+///////////////////////////////////////////////////////////////////////////
 
 // APP LISTEN
 app.listen(PORT, () => {

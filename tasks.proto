@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto3"; 
 
 package tasks;
 
@@ -9,5 +9,7 @@ service TaskAnalysisService {
 message GetTaskStatsRequest {}
 
 message GetTaskStatsResponse {
-  int32 total_tasks = 1;
+  int32 tareas_Totales = 1;
+  map<string, int32> tareas_Asignadas = 2; // Asignaciones por persona
+  map<string, int32> tareas_Creadas = 3; // Creaciones por persona
 }
